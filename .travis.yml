@@ -11,7 +11,7 @@ deploy:
   skip_cleanup: true
   bucket: peetg-react-rls
   region: af-south-1
-  project: ./build/
+  local_dir: build
   access_key_id: $AWS_ACCESS_KEY
   secret_access_key: $AWS_SECRET_KEY
 on:
