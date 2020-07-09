@@ -1,5 +1,4 @@
 import React from "react";
-// import { Button } from "reactstrap";
 
 import MainContext from "../contexts/main-context";
 import LaunchCard from "./launchcard";
@@ -8,19 +7,19 @@ class LaunchList extends React.Component {
   static contextType = MainContext;
   componentDidMount() {
     const data = this.context;
-    // console.log(data);
     data.fetchLaunches();
   }
 
   renderList = (list) => {
-    // console.log(list);
     return list.map((item) => {
       return (
         <LaunchCard
           key={item.id}
-          name={item.name}
+          id={item.id}
+          name={item.name.split("|")[1]}
           rocketname={item.rocket.name}
           startwindow={item.windowstart}
+          country={item.location.countryCode}
         >
           {item.name}
         </LaunchCard>

@@ -1,33 +1,35 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import {
   Card,
   CardText,
   CardBody,
   CardTitle,
   CardSubtitle,
-  Media,
+  Button,
+  Row,
+  Col,
 } from "reactstrap";
 import Countdown from "react-countdown";
+import getCode from "country-iso-3-to-2";
+
+import "../styles/launchcard.css";
 
 class LaunchCard extends React.Component {
-  render(props) {
-    console.log(this.props.name);
+  countryImage(code) {
+    return `https://www.countryflags.io/${getCode(code)}/shiny/64.png`;
+  }
+  render() {
     return (
       <div>
         <Card>
-          <div className="row no-gutters">
-            <div className="col-auto">
-              <Media left middle>
-                <Media
-                  object
-                  left
-                  middle
-                  src="https://www.countryflags.io/za/shiny/64.png"
-                  alt=""
-                />
-              </Media>
-            </div>
-            <div className="col">
+          <Row xs="2" fluid="sm">
+            <Col xs="1">
+              <div className="container image_container">
+                <img src={this.countryImage(this.props.country)} alt="flag" />
+              </div>
+            </Col>
+            <Col>
               <CardBody>
                 <CardTitle>Launch Name : {this.props.name}</CardTitle>
                 <CardSubtitle>
@@ -40,9 +42,17 @@ class LaunchCard extends React.Component {
                   ></Countdown>
                   )
                 </CardText>
+                <Button
+                  tag={Link}
+                  to={`/launchlist/${this.props.id}`}
+                  outline
+                  color="primary"
+                >
+                  Detail
+                </Button>
               </CardBody>
-            </div>
-          </div>
+            </Col>
+          </Row>
         </Card>
       </div>
     );

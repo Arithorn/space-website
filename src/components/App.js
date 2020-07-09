@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import MainContext from "../contexts/main-context";
 import Home from "./home";
 import LaunchList from "./launchlist";
+import LaunchDetail from "./launchdetail";
 import Layout from "./layout";
 import LaunchApi from "../api/launchlibrary";
 
@@ -18,7 +19,7 @@ class App extends React.Component {
     LaunchApi.get("/next/10")
       .then((data) => {
         this.setState({ launches: data.data.launches });
-        // console.log(data.data.launches);
+        console.log(this.state);
       })
       .catch((err) => console.error(err));
   };
@@ -36,6 +37,7 @@ class App extends React.Component {
             <Switch>
               <Route exact path="/" component={Home} />
               <Route exact path="/launchlist" component={LaunchList} />
+              <Route exact path="/launchlist/:id" component={LaunchDetail} />
             </Switch>
           </Layout>
         </Router>

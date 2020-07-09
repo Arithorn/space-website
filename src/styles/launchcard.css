@@ -1,0 +1,10 @@
+.image_container {
+  text-align: center;
+  height: 100%;
+  line-height: 10;
+  vertical-align: middle;
+}
+
+.image_container img {
+  vertical-align: middle;
+}
