@@ -6,11 +6,10 @@ import { Button, Container, Row, Col } from "reactstrap";
 import MainContext from "../contexts/main-context";
 
 class LaunchDetail extends React.Component {
-  renderDetail(launches, id) {
+  renderDetail(launches, id, fetchdata) {
     if (launches.length > 0) {
-      var result = launches.filter((l) => l.id == id)[0];
+      var result = launches.filter((l) => parseInt(l.id) === parseInt(id))[0];
 
-      console.log(result);
       return (
         <Container>
           <div>Detail for Launch : {result.name}</div>
@@ -40,6 +39,7 @@ class LaunchDetail extends React.Component {
         </Container>
       );
     } else {
+      fetchdata();
       return <div>Load Data</div>;
     }
   }
@@ -49,7 +49,11 @@ class LaunchDetail extends React.Component {
       <MainContext.Consumer>
         {(context) => (
           <div>
-            {this.renderDetail(context.launches, this.props.match.params.id)}
+            {this.renderDetail(
+              context.launches,
+              this.props.match.params.id,
+              context.fetchLaunches
+            )}
           </div>
         )}
       </MainContext.Consumer>
