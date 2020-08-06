@@ -1,39 +1,35 @@
 import React from "react";
 
-import MainContext from "../contexts/main-context";
 import LaunchCard from "./launchcard";
+import useSWR from "swr";
+import api from "../api/launchlibrary";
 
-class LaunchList extends React.Component {
-  static contextType = MainContext;
-  componentDidMount() {
-    const data = this.context;
-    data.fetchLaunches();
-  }
-
-  renderList = (list) => {
-    return list.map((item) => {
-      return (
-        <LaunchCard
-          key={item.id}
-          id={item.id}
-          name={item.name.split("|")[1]}
-          rocketname={item.rocket.name}
-          startwindow={item.windowstart}
-          country={item.location.countryCode}
-        >
-          {item.name}
-        </LaunchCard>
-      );
-    });
-  };
-
-  render() {
+const renderList = (list) => {
+  console.log(list);
+  return list?.map((item) => {
     return (
-      <MainContext.Consumer>
-        {(context) => <div>{this.renderList(context.launches)}</div>}
-      </MainContext.Consumer>
+      <LaunchCard
+        key={item.id}
+        id={item.id}
+        name={item.name.split("|")[1]}
+        rocketname={item.rocket.name}
+        startwindow={item.windowstart}
+        country={item.location.countryCode}
+      >
+        {item.name}
+      </LaunchCard>
     );
-  }
-}
+  });
+};
+
+const LaunchList = () => {
+  const { data, error } = useSWR("/next/10", (url) =>
+    api.get(url).then((r) => r.data)
+  );
+  if (error) return <div>failed to load</div>;
+  if (!data) return <div>loading...</div>;
+
+  return <div>{renderList(data.launches)}</div>;
+};
 
 export default LaunchList;
